@@ -1,9 +1,7 @@
 package org.codecCentral.imageio.generic;
 
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -13,47 +11,17 @@ public class NativeUtilities {
 
     private static final Logger LOGGER = Logger.getLogger("org.codecCentral.imageio.generic");
     
-    private static Map<String, Boolean> available;
-    private static  Map<String, Boolean> initialized;
+    private  boolean available;
+    private  boolean initialized;
     
 /*----------------------------------------------------------------------*/
-
-    private NativeUtilities() {
-
-    }
     
-    static
+    public NativeUtilities()
     {
-    	available = new HashMap<String, Boolean>();
-    	initialized = new HashMap<String, Boolean>();
+    	
     }
 
     
-    private static String GenerateId(List<String> libraries)
-    {
-    	String rc = "";
-    	for (String library : libraries)
-    	{
-    		rc += library;
-    	}
-    	return rc;
-    }
-
-    private static boolean isTrue(Map<String, Boolean> map, List<String> libraries)
-    {
-    	String key = GenerateId(libraries);
-    	if (map.containsKey(key))
-    		return map.get(key);
-    	return false;
-	
-    }
-    private static void setTrue(Map<String, Boolean> map, List<String> libraries)
-    {
-    	String key = GenerateId(libraries);
-    	if (!map.containsKey(key))
-    		 map.put(key, true);
-
-    }
     /**
      * Returns <code>true</code> if the OpenJpeg native library has been loaded.
      * <code>false</code> otherwise.
@@ -61,18 +29,18 @@ public class NativeUtilities {
      * @return <code>true</code> only if the native library has been
      *         loaded.
      */
-    public synchronized static boolean areLibrariesAvailable(List<String> libraries) {
+    public synchronized boolean areLibrariesAvailable(List<String> libraries) {
         loadLibraries(libraries);
-        return isTrue(available, libraries);
+        return available;
     }
 
     /**
      * Forces loading of library libs.
      */
-    public synchronized static void loadLibraries(List<String> libraries) {
-        if (isTrue(initialized, libraries))
+    public synchronized void loadLibraries(List<String> libraries) {
+        if (initialized)
             return;
-        setTrue(initialized, libraries);
+        initialized = true;
         try {
         	for (String library : libraries)
         	{
@@ -80,7 +48,7 @@ public class NativeUtilities {
         			System.loadLibrary(library);
         		
         	}
-            setTrue(available,libraries);
+            available = true;
         } catch (UnsatisfiedLinkError e) {
             if (LOGGER.isLoggable(Level.WARNING)){
             	 LOGGER.warning("Failed to load the native libs. Plugin disabled. " + e.toString());
