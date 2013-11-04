@@ -133,7 +133,7 @@ public abstract class DecoderBase extends DecoderEncoderBase {
 	void alloc8() {
 		if ((image8 == null || (image8 != null && image8.length != width
 				* height))
-				&& (depth == -1 || depth == 8)) {
+				&& (getDepth() == 1)) {
 			image8 = new byte[width * height];
 			logMessage("Decoder.alloc8: image8 length = "
 					+ image8.length + " (" + width + " x " + height + ") ");
@@ -143,7 +143,7 @@ public abstract class DecoderBase extends DecoderEncoderBase {
 	void alloc16() {
 		if ((image16 == null || (image16 != null && image16.length != width
 				* height))
-				&& (depth == -1 || depth == 16)) {
+				&& (getDepth() == 2)) {
 			image16 = new short[width * height];
 			logMessage("Decoder.alloc16: image16 length = "
 					+ image16.length + " (" + width + " x " + height + ") ");
@@ -153,7 +153,7 @@ public abstract class DecoderBase extends DecoderEncoderBase {
 	void alloc24() {
 		if ((image24 == null || (image24 != null && image24.length != width
 				* height))
-				&& (depth == -1 || depth == 24)) {
+				&& (getDepth() == 3)) {
 			image24 = new int[width * height];
 			logMessage("Decoder.alloc24: image24 length = "
 					+ image24.length + " (" + width + " x " + height + ") ");

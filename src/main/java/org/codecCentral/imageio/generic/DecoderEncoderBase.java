@@ -16,7 +16,7 @@ public abstract class DecoderEncoderBase {
 
 	protected int width = -1;
 	protected int height = -1;
-	protected int depth = -1;
+	protected int bitsPerSample = -1;
 	
 	
 	/** Sets the codestream to be decoded */
@@ -95,12 +95,12 @@ public abstract class DecoderEncoderBase {
 
 	/** Image depth in bpp */
 	public int getDepth() {
-		return depth;
+		return (bitsPerSample + 7)/8;
 	}
 
 	/** Image depth in bpp */
-	public void setDepth(int depth) {
-		this.depth = depth;
+	public void setBitsPerSample(int bits) {
+		this.bitsPerSample = bits;
 	}
 
 	/** Image height in pixels */
@@ -129,7 +129,7 @@ public abstract class DecoderEncoderBase {
 		image24 = null;
 		width = -1;
 		height = -1;
-		depth = -1;
+		bitsPerSample = -1;
 	}
 	
 
