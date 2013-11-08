@@ -151,9 +151,9 @@ public abstract class DecoderBase extends DecoderEncoderBase {
 	}
 
 	void alloc24() {
-		if ((image24 == null || (image24 != null && image24.length != width
-				* height))
-				&& (getDepth() == 3)) {
+		if ((image24 == null || image24.length != width * height) &&
+				getDepth() == 3)
+		{
 			image24 = new int[width * height];
 			logMessage("Decoder.alloc24: image24 length = "
 					+ image24.length + " (" + width + " x " + height + ") ");

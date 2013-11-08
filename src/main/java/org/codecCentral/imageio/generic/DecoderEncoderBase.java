@@ -17,6 +17,7 @@ public abstract class DecoderEncoderBase {
 	protected int width = -1;
 	protected int height = -1;
 	protected int bitsPerSample = -1;
+	protected int samplesPerPixel = -1;
 	
 	
 	/** Sets the codestream to be decoded */
@@ -95,7 +96,7 @@ public abstract class DecoderEncoderBase {
 
 	/** Image depth in bpp */
 	public int getDepth() {
-		return (bitsPerSample + 7)/8;
+		return ((bitsPerSample + 7)/8)*samplesPerPixel;
 	}
 
 	/** Image depth in bpp */
