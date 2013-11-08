@@ -176,21 +176,13 @@ public abstract class GenericImageReader extends ImageReader {
 				throw new RuntimeException("Unable to read data from ImageInputStream", ioe);
 			}
 		}
-		else if (input instanceof List)
+		else if (input instanceof SegmentedDataInfo)
 		{
-			List args = (List)input;
-			if (args.size() != 3 
-					|| !(args.get(0) instanceof String)
-					  || !(args.get(1) instanceof long[])
-					    || !(args.get(2) instanceof long[]))
-			{
-				throw new IllegalArgumentException("Incorrect input type!");
-			}
-			inputFile = new File((String)args.get(0));
-			decoder.SetSegmentPositions((long[])args.get(1));
-			decoder.SetSegmentLengths((long[])args.get(2));
-			
-		}
+			SegmentedDataInfo info = (SegmentedDataInfo)input;
+			inputFile = new File(info.fileName);
+			decoder.SetSegmentPositions(info.segmentOffsets);
+			decoder.SetSegmentLengths(info.segmentLengths);
+	}
 		else
 		{
 			throw new IllegalArgumentException("Incorrect input type!");
