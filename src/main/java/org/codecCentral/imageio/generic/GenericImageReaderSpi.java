@@ -10,8 +10,7 @@ import javax.imageio.spi.IIORegistry;
 import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.spi.ImageReaderWriterSpi;
 import javax.imageio.spi.ServiceRegistry;
-
-import com.sun.org.apache.xml.internal.security.exceptions.Base64DecodingException;
+import org.codecCentral.imageio.generic.DecoderBase;
 
 
 public abstract class GenericImageReaderSpi extends ImageReaderSpi {
