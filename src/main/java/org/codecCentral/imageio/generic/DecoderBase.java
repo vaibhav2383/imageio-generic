@@ -1,3 +1,11 @@
+/* 
+ * Copyright (c) 2014, Aaron Boxer
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * 
+ */
+
 package org.codecCentral.imageio.generic;
 
 
@@ -14,18 +22,12 @@ public abstract class DecoderBase extends DecoderEncoderBase {
 
 		public void logDecoderError(String message);
 	}
-	
 
 	private Vector<IJavaJ2KDecoderLogger> loggers = new Vector<IJavaJ2KDecoderLogger>();
-
-
-	/** This method is called either directly or by the C methods */
 	public void logMessage(String message) {
 		for (IJavaJ2KDecoderLogger logger : loggers)
 			logger.logDecoderMessage(message);
 	}
-
-	/** This method is called either directly or by the C methods */
 	public void logError(String error) {
 		for (IJavaJ2KDecoderLogger logger : loggers)
 			logger.logDecoderError(error);
@@ -39,31 +41,20 @@ public abstract class DecoderBase extends DecoderEncoderBase {
 		loggers.removeElement(messagesAndErrorsLogger);
 	}
 	
+	// these fields are accessed from the C code via JNI
 	private long[] segmentPositions;
 	private long[] segmentLengths;
-
-
 	public void SetSegmentPositions(long[] positions)
 	{
 		segmentPositions = positions;
 	}
-
 	public void SetSegmentLengths(long[] lengths)
 	{
 		segmentLengths = lengths;
 	}
 	
 	private static boolean DEBUG_DECOMPRESS_FROM_BUFFER = false;
-
-
-	// ===== decompression parameters =============>
-	/*
-	 * These value may be changed for each image
-	 */
 	protected String[] decoder_arguments = null;
-	
-	
-	/** Contains all the decoding arguments other than the input/output file */
 	public void setDecoderArguments(String[] argumentsForTheDecoder) {
 		decoder_arguments = argumentsForTheDecoder;
 	}
@@ -90,27 +81,14 @@ public abstract class DecoderBase extends DecoderEncoderBase {
 		internalDecode(convertArguments(decoder_arguments));;
 	}
 
-	// Returns the contents of the file in a byte array.
 	private static byte[] getBytesFromFile(File file) throws IOException {
-		// Get the size of the file
 		long length = file.length();
-
-		// You cannot create an array using a long type.
-		// It needs to be an int type.
-		// Before converting to an int type, check
-		// to ensure that file is not larger than Integer.MAX_VALUE.
 		if (length > Integer.MAX_VALUE) {
-			// File is too large
 			throw new IOException("File is too large!");
 		}
-
-		// Create the byte array to hold the data
 		byte[] bytes = new byte[(int) length];
-
-		// Read in the bytes
 		int offset = 0;
 		int numRead = 0;
-
 		InputStream is = new FileInputStream(file);
 		try {
 			while (offset < bytes.length
@@ -120,16 +98,12 @@ public abstract class DecoderBase extends DecoderEncoderBase {
 		} finally {
 			is.close();
 		}
-
-		// Ensure all the bytes have been read in
 		if (offset < bytes.length) {
 			throw new IOException("Could not completely read file "
 					+ file.getName());
 		}
 		return bytes;
 	}
-	
-	
 	void alloc8() {
 		if ((image8 == null || (image8 != null && image8.length != width
 				* height))
@@ -139,7 +113,6 @@ public abstract class DecoderBase extends DecoderEncoderBase {
 					+ image8.length + " (" + width + " x " + height + ") ");
 		}
 	}
-
 	void alloc16() {
 		if ((image16 == null || (image16 != null && image16.length != width
 				* height))
@@ -149,7 +122,6 @@ public abstract class DecoderBase extends DecoderEncoderBase {
 					+ image16.length + " (" + width + " x " + height + ") ");
 		}
 	}
-
 	void alloc24() {
 		if ((image24 == null || image24.length != width * height) &&
 				getDepth() == 3)
@@ -159,7 +131,6 @@ public abstract class DecoderBase extends DecoderEncoderBase {
 					+ image24.length + " (" + width + " x " + height + ") ");
 		}
 	}
-	
 
 	public boolean canDecode(String fname)
 	{
@@ -173,8 +144,6 @@ public abstract class DecoderBase extends DecoderEncoderBase {
 		compressedStream = null;
 		return canDecode;
 	}
-
-	
 	protected abstract int internalDecode(String[] parameters);
 	protected abstract int internalGetFormat(String[] parameters);
 }

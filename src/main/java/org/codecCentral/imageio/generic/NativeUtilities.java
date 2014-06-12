@@ -1,11 +1,17 @@
+/* 
+ * Copyright (c) 2014, Aaron Boxer
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * 
+ */
+
 package org.codecCentral.imageio.generic;
 
 
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-
 
 public class NativeUtilities {
 
@@ -14,29 +20,15 @@ public class NativeUtilities {
     private  boolean available;
     private  boolean initialized;
     
-/*----------------------------------------------------------------------*/
-    
+ 
     public NativeUtilities()
     {
     	
     }
-
-    
-    /**
-     * Returns <code>true</code> if the OpenJpeg native library has been loaded.
-     * <code>false</code> otherwise.
-     * 
-     * @return <code>true</code> only if the native library has been
-     *         loaded.
-     */
     public synchronized boolean areLibrariesAvailable(List<String> libraries) {
         loadLibraries(libraries);
         return available;
     }
-
-    /**
-     * Forces loading of library libs.
-     */
     public synchronized void loadLibraries(List<String> libraries) {
         if (initialized)
             return;
@@ -55,6 +47,4 @@ public class NativeUtilities {
             }
         }
     }
-    
-  
-}
+ }

@@ -1,3 +1,11 @@
+/* 
+ * Copyright (c) 2014, Aaron Boxer
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * 
+ */
+
 package org.codecCentral.imageio.generic;
 
 import java.io.IOException;
@@ -13,13 +21,8 @@ public abstract class GenericImageWriter extends ImageWriter{
 	
 	protected GenericImageWriter(ImageWriterSpi originatingProvider) {
 		super(originatingProvider);
-		// TODO Auto-generated constructor stub
 	}
 	
-    /**
-     * Write back the compressed JP2 file to the provided output stream.
-     * @throws IOException
-     */
     protected void writeOnStream() throws IOException {
     	if (outputStream == null)
     		return;

@@ -1,3 +1,11 @@
+/* 
+ * Copyright (c) 2014, Aaron Boxer
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * 
+ */
+
 package org.codecCentral.imageio.generic;
 
 import java.awt.Point;
@@ -17,8 +25,6 @@ import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
-
 import javax.imageio.ImageReadParam;
 import javax.imageio.ImageReader;
 import javax.imageio.spi.ImageReaderSpi;
@@ -44,17 +50,6 @@ public abstract class GenericImageReader extends ImageReader {
 		
 	}
 
-	/**
-	 * Checks if the specified ImageIndex is valid.
-	 * 
-	 * @param imageIndex
-	 *            the specified imageIndex
-	 * 
-	 * @throws IndexOutOfBoundsException
-	 *             if imageIndex is lower than 0 or if is greater than the max
-	 *             number (-1) of images available within the data source
-	 *             contained within the source
-	 */
 	protected void checkImageIndex(final int imageIndex) {
 		if (imageIndex < 0 || imageIndex > numImages) {
 			final StringBuffer sb = new StringBuffer(
@@ -71,22 +66,9 @@ public abstract class GenericImageReader extends ImageReader {
 		}
 	}
 
-
-
-	/**
-	 * Returns the number of images contained in the source.
-	 */
 	public int getNumImages(boolean allowSearch) throws IOException {
 		return numImages;
 	}
-
-	/**
-	 * Read the image and returns it as a complete <code>BufferedImage</code>,
-	 * using a supplied <code>ImageReadParam</code>.
-	 * 
-	 * @param imageIndex
-	 *            the index of the desired image.
-	 */
 	public BufferedImage read(int imageIndex, ImageReadParam param)
 			throws IOException {
 		checkImageIndex(imageIndex);
@@ -195,10 +177,6 @@ public abstract class GenericImageReader extends ImageReader {
 		super.setInput(input, seekForwardOnly, ignoreMetadata);
 	}
 
-	/**
-	 * Disposes all the resources, native and non, used by this
-	 * {@link ImageReader} subclass.
-	 */
 	public void dispose() {
 		super.dispose();
 		numImages = 1;

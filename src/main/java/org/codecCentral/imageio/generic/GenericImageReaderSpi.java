@@ -1,3 +1,11 @@
+/* 
+ * Copyright (c) 2014, Aaron Boxer
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * 
+ */
+
 package org.codecCentral.imageio.generic;
 
 import java.io.File;
@@ -11,7 +19,6 @@ import javax.imageio.spi.ImageReaderSpi;
 import javax.imageio.spi.ImageReaderWriterSpi;
 import javax.imageio.spi.ServiceRegistry;
 import org.codecCentral.imageio.generic.DecoderBase;
-
 
 public abstract class GenericImageReaderSpi extends ImageReaderSpi {
 
@@ -55,17 +62,19 @@ public abstract class GenericImageReaderSpi extends ImageReaderSpi {
     	DecoderBase decoder = CreateDecoder();
 
         // Retrieving the File source
-        if (input instanceof File) {
+        if (input instanceof File) 
+        {
             isDecodable =  decoder.canDecode(((File) input).getAbsolutePath());
           
         } else if (input instanceof byte[]) 
         {
-           // source = (byte[])input;
+        	isDecodable =  decoder.canDecode((byte[])input);
         } else if (input instanceof URL)
         {
             final URL tempURL = (URL) input;
-            if (tempURL.getProtocol().equalsIgnoreCase("file")) {
-                //source = Utils.urlToFile(tempURL);
+            if (tempURL.getProtocol().equalsIgnoreCase("file")) 
+            {
+            	isDecodable =  decoder.canDecode(Utils.urlToFile(tempURL).getAbsolutePath());
             }
         } else
             return false;

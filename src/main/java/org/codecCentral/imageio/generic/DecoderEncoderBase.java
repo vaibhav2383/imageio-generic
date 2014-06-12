@@ -1,3 +1,11 @@
+/* 
+ * Copyright (c) 2014, Aaron Boxer
+ * This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ * 
+ */
+
 package org.codecCentral.imageio.generic;
 
 public abstract class DecoderEncoderBase {
@@ -11,7 +19,6 @@ public abstract class DecoderEncoderBase {
 	protected short[] image16 = null;
 	protected int[] image24 = null;
 
-	/** Holds the  compressed byte code to decode */
 	protected byte compressedStream[] = null;
 
 	protected int width = -1;
@@ -19,13 +26,9 @@ public abstract class DecoderEncoderBase {
 	protected int bitsPerSample = -1;
 	protected int samplesPerPixel = -1;
 	
-	
-	/** Sets the codestream to be decoded */
 	public void setCompressedStream(byte[] compressedStream) {
 		this.compressedStream = compressedStream;
 	}
-
-	/** @return the compressed code stream length, or -1 if not defined */
 	public long getCodestreamLength() {
 		if (compressedStream == null)
 			return -1;
@@ -52,8 +55,7 @@ public abstract class DecoderEncoderBase {
 	/**
 	 * This method must be called in depth in [9,16].
 	 * 
-	 * @param an
-	 *            array of shorts, containing width*height values
+	 * @param an array of shorts, containing width*height values
 	 */
 	public void setImage16(short[] image16) {
 		this.image16 = image16;
@@ -62,8 +64,7 @@ public abstract class DecoderEncoderBase {
 	/**
 	 * This method must be called in depth in [17,24] for RGB images.
 	 * 
-	 * @param an
-	 *            array of int, containing width*height values
+	 * @param an   array of int, containing width*height values
 	 */
 	public void setImage24(int[] image24) {
 		this.image24 = image24;
@@ -87,9 +88,6 @@ public abstract class DecoderEncoderBase {
 		return image8;
 	}
 	
-	
-
-
 	public byte[] getCompressedStream() {
 		return compressedStream;
 	}
